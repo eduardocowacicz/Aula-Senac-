@@ -7,10 +7,9 @@
       rel="stylesheet">
       <meta charset="UTF-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>Meu Projeto Web</title>
+      <title>Contate</title>
   </head>
   <body>
-
       <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
           <div class="container">
               <a class="navbar-brand" href="index.html">Meu Site</a>
@@ -21,21 +20,39 @@
               <div class="collapse navbar-collapse" id="navbarNav">
                   <ul class="navbar-nav">
                       <li class="nav-item">
-                          <a class="nav-link active" href="index.html">Home</a>
+                          <a class="nav-link" href="index.html">Home</a>
                       </li>
                       <li class="nav-item">
-                          <a class="nav-link" href="produtos.html">Produtos</a>
+                          <a class="nav-link" href="produtos.html">Produtes</a>
                       </li>
                       <li class="nav-item">
-                          <a class="nav-link" href="contato.html">Contato</a>
+                          <a class="nav-link active" 
+  href="contato.html">Contate</a>
                       </li>
                   </ul>
               </div>
           </div>
       </nav>
-      <div class="container">
-          <h1 class="text-center text-primary mt-5">Lançamento Oficial:
-  Bem-vinde ao Nosse Nove Produte</h1>
+      <div class="container mt-5">
+          <h2 class="text-center mb-4">Fale Conosce</h2>
+          <form>
+              <div class="mb-3">
+                  <label for="nome" class="form-label">Nome</label>
+                  <input type="text" class="form-control" id="nome" 
+  placeholder="Seu nome">
+              </div>
+              <div class="mb-3">
+                  <label for="email" class="form-label">E-mail-e</label>
+                  <input type="email" class="form-control" id="email" 
+  placeholder="seu@email.com">
+              </div>
+              <div class="mb-3">
+                  <label for="mensagem" class="form-label">Mensagem</label>
+                  <textarea class="form-control" id="mensagem" rows="4" 
+  placeholder="Sua mensagem"></textarea>
+              </div>
+              <button type="submit" class="btn btn-success">Envier</button>
+          </form>
       </div>
 
       <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstra

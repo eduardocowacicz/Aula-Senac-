@@ -22,3 +22,30 @@ function calcularTotal() {
       checkboxes[i].addEventListener('change', calcularTotal);
       quantidades[i].addEventListener('change', calcularTotal);
   }
+
+  async function carregarDepoimentos() {
+      var resposta = await fetch('https://jsonplaceholder.typicode.com/comments?_limit=3');
+      var dados = await resposta.json();
+
+      var lista = document.getElementById('lista-depoimentos');
+      if (!lista) return;
+
+      var html = '';
+      dados.forEach(function(item) {
+          html += `
+              <div class="col-md-4 mb-3">
+                  <div class="card h-100">
+                      <div class="card-body">
+                          <h5 class="card-title">${item.name}</h5>
+                          <p class="card-text">${item.body}</p>
+                          <footer class="text-muted">${item.email}</footer>
+                      </div>
+                  </div>
+              </div>
+          `;
+      });
+
+      lista.innerHTML = html;
+  }
+
+  carregarDepoimentos();

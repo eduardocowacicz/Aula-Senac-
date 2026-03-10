@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carrinho de Compras</title>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">Meu Site</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="produtos.html">Produtes</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="contato.html">Contate</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="carrinho.html">Carrinho <span class="badge bg-danger" id="cart-count">0</span></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-5">
+        <h2 class="text-center mb-4">Carrinho de Compras</h2>
+
+        <!-- Itens do carrinho -->
+        <div id="carrinho-vazio" class="alert alert-warning text-center" style="display: none;">
+            Seu carrinho está vazio. <a href="produtos.html">Ver produtos</a>
+        </div>
+
+        <table class="table table-striped" id="tabela-carrinho">
+            <thead class="table-dark">
+                <tr>
+                    <th>Produto</th>
+                    <th>Preço Unit.</th>
+                    <th>Quantidade</th>
+                    <th>Subtotal</th>
+                    <th>Ação</th>
+                </tr>
+            </thead>
+            <tbody id="corpo-carrinho">
+            </tbody>
+            <tfoot>
+                <tr class="table-info">
+                    <td colspan="3" class="text-end fw-bold fs-5">Total:</td>
+                    <td class="fw-bold fs-5" id="carrinho-total">R$ 0,00</td>
+                    <td></td>
+                </tr>
+            </tfoot>
+        </table>
+
+        <div class="d-flex justify-content-between mb-4">
+            <a href="produtos.html" class="btn btn-outline-secondary">Continuar Comprando</a>
+            <button class="btn btn-danger" id="btn-limpar-carrinho">Limpar Carrinho</button>
+        </div>
+
+        <hr>
+
+        <!-- Formulário de Checkout -->
+        <div id="secao-checkout">
+            <h3 class="text-center mb-4">Finalizar Compra</h3>
+            <form id="form-checkout">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h5>Dados Pessoais</h5>
+                        <div class="mb-3">
+                            <label for="checkout-nome" class="form-label">Nome Completo</label>
+                            <input type="text" class="form-control" id="checkout-nome" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="checkout-email" class="form-label">E-mail</label>
+                            <input type="email" class="form-control" id="checkout-email" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="checkout-telefone" class="form-label">Telefone</label>
+                            <input type="tel" class="form-control" id="checkout-telefone" required>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <h5>Endereço de Entrega</h5>
+                        <div class="mb-3">
+                            <label for="checkout-endereco" class="form-label">Endereço</label>
+                            <input type="text" class="form-control" id="checkout-endereco" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="checkout-cidade" class="form-label">Cidade</label>
+                            <input type="text" class="form-control" id="checkout-cidade" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="checkout-cep" class="form-label">CEP</label>
+                            <input type="text" class="form-control" id="checkout-cep" required>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-center mt-3 mb-5">
+                    <button type="submit" class="btn btn-success btn-lg">Confirmar Pedido</button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Mensagem de sucesso (escondida inicialmente) -->
+        <div id="pedido-sucesso" class="alert alert-success text-center" style="display: none;">
+            <h3>Pedido realizado com sucesso!</h3>
+            <p>Obrigado pela sua compra. Você receberá um e-mail de confirmação em breve.</p>
+            <a href="index.html" class="btn btn-primary mt-3">Voltar para Home</a>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script type="module" src="js/main.js"></script>
+</body>
+</html>

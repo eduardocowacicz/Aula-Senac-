@@ -1,197 +1,105 @@
-// =============================================
-// FUNÇÕES DE MANIPULAÇÃO DO DOM
-// =============================================
+function escAttr(str) {
+  return String(str)
+    .replace(/&/g, "&amp;")
+    .replace(/"/g, "&quot;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;");
+}
 
-export function renderizarDepoimentos(dados) {
-    var lista = document.getElementById('lista-depoimentos');
-    if (!lista) return;
+export function renderizarProdutos(produtos) {
+  const lista = document.getElementById("lista-produtos");
+  if (!lista) return;
 
-    var html = '';
-    dados.forEach(function(item) {
-        html += `
-            <div class="col-md-4 mb-3">
-                <div class="card h-100">
-                    <div class="card-body">
-                        <h5 class="card-title">${item.name}</h5>
-                        <p class="card-text">${item.body}</p>
-                        <footer class="text-muted">${item.email}</footer>
-                    </div>
-                </div>
+  lista.innerHTML = "";
+
+  produtos.forEach(function (produto) {
+    const qtdId = `qtd-produto${produto.id}`;
+    const preco = produto.price.toLocaleString("pt-BR", {
+      minimumFractionDigits: 2,
+    });
+    const titulo = escAttr(produto.title);
+    const descricao = escAttr(produto.description);
+    const estrelas = Math.round(produto.rating.rate);
+
+    lista.innerHTML += `
+      <div class="col-md-4 mb-4">
+        <div class="card h-100 shadow-sm">
+          <div class="d-flex align-items-center justify-content-center p-3 bg-white" style="height: 220px;">
+            <img src="${produto.image}" class="img-fluid" style="max-height: 200px; object-fit: contain;" alt="${titulo}">
+          </div>
+          <div class="card-body d-flex flex-column">
+            <span class="badge bg-secondary mb-2 text-capitalize" style="width: fit-content;">${produto.category}</span>
+            <h5 class="card-title fs-6">${produto.title}</h5>
+            <p class="card-text text-muted small flex-grow-1">${produto.description.substring(0, 90)}...</p>
+            <div class="d-flex align-items-center gap-1 mb-2 small">
+              <span class="text-warning">${"★".repeat(estrelas)}${"☆".repeat(5 - estrelas)}</span>
+              <span class="text-muted">(${produto.rating.count})</span>
             </div>
-        `;
-    });
-
-    lista.innerHTML = html;
+            <div class="d-flex align-items-center justify-content-between gap-2 mb-3">
+              <p class="fw-bold mt-auto mb-2">R$ ${preco}</p>
+              <div class="d-flex align-items-center gap-2">
+                <label for="${qtdId}" class="form-label mb-0 text-nowrap">Qtd:</label>
+                <input type="number" class="form-control form-control-sm" id="${qtdId}" value="1" min="1" style="width: 70px;">
+              </div>
+            </div>
+            <div class="d-flex gap-2 mt-auto">
+              <button class="btn btn-outline-secondary flex-grow-1"
+                data-bs-toggle="modal" data-bs-target="#modalProduto"
+                data-nome="${titulo}"
+                data-descricao="${descricao}"
+                data-preco="${preco}">
+                🔍 Ver Detalhes
+              </button>
+              <button class="btn btn-primary flex-grow-1 btn-adicionar"
+                data-nome="${titulo}"
+                data-preco="${produto.price}"
+                data-qtd-id="${qtdId}">
+                🛒 Adicionar
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    `;
+  });
 }
 
-export function exibirAlerta(containerId, tipo, mensagem) {
-    var container = document.getElementById(containerId);
-    if (container) {
-        container.innerHTML = '<div class="alert alert-' + tipo + '">' + mensagem + '</div>';
-    }
+export function renderizarDepoimentos(depoimentos) {
+  const lista = document.getElementById("lista-depoimentos");
+  if (!lista) return;
+
+  depoimentos.forEach(function (depoimento) {
+    lista.innerHTML += `
+      <div class="col-md-4 mb-4">
+        <div class="card h-100 shadow-sm">
+          <div class="card-body">
+            <h5 class="card-title">${depoimento.name}</h5>
+            <h6 class="card-subtitle mb-2 text-muted">${depoimento.email}</h6>
+            <p class="card-text">${depoimento.body}</p>
+          </div>
+        </div>
+      </div>
+    `;
+  });
 }
 
-export function calcularTotal() {
-    var checkboxes = document.querySelectorAll('.item-produto');
-    var quantidades = document.querySelectorAll('.qtd-produto');
-    var total = 0;
-
-    for (var i = 0; i < checkboxes.length; i++) {
-        if (checkboxes[i].checked) {
-            var preco = parseFloat(checkboxes[i].value);
-            var qtd = parseInt(quantidades[i].value);
-            total = total + (preco * qtd);
-        }
-    }
-
-    var el = document.getElementById('valor-total');
-    if (el) {
-        el.textContent = total.toFixed(2).replace('.', ',');
-    }
+export function mostrarAlerta(tipo, mensagem, referencia) {
+  const alerta = document.createElement("div");
+  alerta.className = `alert alert-${tipo} mt-4 alert-dismissible fade show`;
+  alerta.setAttribute("role", "alert");
+  alerta.innerHTML = `
+    ${mensagem}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Fechar"></button>
+  `;
+  referencia.insertAdjacentElement("afterend", alerta);
 }
 
-// =============================================
-// CARRINHO - Funções auxiliares
-// =============================================
-export function getCarrinho() {
-    var carrinho = localStorage.getItem('carrinho');
-    return carrinho ? JSON.parse(carrinho) : [];
-}
-
-export function salvarCarrinho(carrinho) {
-    localStorage.setItem('carrinho', JSON.stringify(carrinho));
-}
-
-export function atualizarContador() {
-    var carrinho = getCarrinho();
-    var total = 0;
-    carrinho.forEach(function(item) {
-        total += item.qtd;
-    });
-    var badges = document.querySelectorAll('#cart-count');
-    badges.forEach(function(badge) {
-        badge.textContent = total;
-    });
-}
-
-export function adicionarAoCarrinho(nome, preco) {
-    var carrinho = getCarrinho();
-    var encontrado = false;
-
-    for (var i = 0; i < carrinho.length; i++) {
-        if (carrinho[i].nome === nome) {
-            carrinho[i].qtd += 1;
-            encontrado = true;
-            break;
-        }
-    }
-
-    if (!encontrado) {
-        carrinho.push({ nome: nome, preco: parseFloat(preco), qtd: 1 });
-    }
-
-    salvarCarrinho(carrinho);
-    atualizarContador();
-}
-
-export function removerDoCarrinho(index) {
-    var carrinho = getCarrinho();
-    carrinho.splice(index, 1);
-    salvarCarrinho(carrinho);
-    renderizarCarrinho();
-    atualizarContador();
-}
-
-export function alterarQuantidade(index, novaQtd) {
-    var carrinho = getCarrinho();
-    if (novaQtd < 1) {
-        removerDoCarrinho(index);
-        return;
-    }
-    carrinho[index].qtd = novaQtd;
-    salvarCarrinho(carrinho);
-    renderizarCarrinho();
-    atualizarContador();
-}
-
-export function renderizarCarrinho() {
-    var corpo = document.getElementById('corpo-carrinho');
-    if (!corpo) return;
-
-    var carrinho = getCarrinho();
-    var totalGeral = 0;
-
-    var avisoVazio = document.getElementById('carrinho-vazio');
-    var tabela = document.getElementById('tabela-carrinho');
-    var checkout = document.getElementById('secao-checkout');
-
-    if (carrinho.length === 0) {
-        avisoVazio.style.display = 'block';
-        tabela.style.display = 'none';
-        if (checkout) checkout.style.display = 'none';
-    } else {
-        avisoVazio.style.display = 'none';
-        tabela.style.display = 'table';
-        if (checkout) checkout.style.display = 'block';
-    }
-
-    corpo.innerHTML = '';
-
-    carrinho.forEach(function(item, index) {
-        var subtotal = item.preco * item.qtd;
-        totalGeral += subtotal;
-
-        corpo.innerHTML += `
-            <tr>
-                <td>${item.nome}</td>
-                <td>R$ ${item.preco.toFixed(2).replace('.', ',')}</td>
-                <td>
-                    <div class="d-flex align-items-center gap-2">
-                        <button class="btn btn-sm btn-outline-secondary btn-qtd-menos" data-index="${index}">-</button>
-                        <span>${item.qtd}</span>
-                        <button class="btn btn-sm btn-outline-secondary btn-qtd-mais" data-index="${index}">+</button>
-                    </div>
-                </td>
-                <td>R$ ${subtotal.toFixed(2).replace('.', ',')}</td>
-                <td>
-                    <button class="btn btn-sm btn-danger btn-remover" data-index="${index}">Remover</button>
-                </td>
-            </tr>
-        `;
-    });
-
-    document.getElementById('carrinho-total').textContent = 'R$ ' + totalGeral.toFixed(2).replace('.', ',');
-
-    document.querySelectorAll('.btn-remover').forEach(function(btn) {
-        btn.addEventListener('click', function() {
-            removerDoCarrinho(parseInt(this.dataset.index));
-        });
-    });
-
-    document.querySelectorAll('.btn-qtd-menos').forEach(function(btn) {
-        btn.addEventListener('click', function() {
-            var idx = parseInt(this.dataset.index);
-            var c = getCarrinho();
-            alterarQuantidade(idx, c[idx].qtd - 1);
-        });
-    });
-
-    document.querySelectorAll('.btn-qtd-mais').forEach(function(btn) {
-        btn.addEventListener('click', function() {
-            var idx = parseInt(this.dataset.index);
-            var c = getCarrinho();
-            alterarQuantidade(idx, c[idx].qtd + 1);
-        });
-    });
-}
-
-export function preencherModal(event) {
-    var botao = event.relatedTarget;
-    var nome = botao.getAttribute('data-nome');
-    var descricao = botao.getAttribute('data-descricao');
-    var preco = botao.getAttribute('data-preco');
-
-    document.getElementById('modalProdutoLabel').textContent = nome;
-    document.getElementById('modal-descricao').textContent = descricao;
-    document.getElementById('modal-preco').textContent = 'R$ ' + parseFloat(preco).toFixed(2).replace('.', ',');
+export function atualizarContadorCarrinho() {
+  const counter = document.getElementById("carrinho-count");
+  if (!counter) return;
+  const carrinho = JSON.parse(localStorage.getItem("carrinho")) || [];
+  const total = carrinho.reduce(function (acc, item) {
+    return acc + item.quantidade;
+  }, 0);
+  counter.textContent = total;
 }

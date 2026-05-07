@@ -1,124 +1,246 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Carrinho de Compras</title>
-</head>
-<body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container">
-            <a class="navbar-brand" href="index.html">Meu Site</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link" href="index.html">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="produtos.html">Produtes</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="contato.html">Contate</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link active" href="carrinho.html">Carrinho <span class="badge bg-danger" id="cart-count">0</span></a>
-                    </li>
-                </ul>
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Carrinho — Labubu Store</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/src/styles/main.scss" />
+  </head>
+  <body class="theme-default">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
+      <div class="container">
+        <a class="navbar-brand fw-bold" href="index.html">🛍️ Labubu Store</a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav me-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="index.html">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="produtos.html">Produtos</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="contato.html">Contato</a>
+            </li>
+          </ul>
+          <div class="nav-action-group d-flex align-items-center gap-2">
+            <div
+              class="theme-switcher btn-group btn-group-sm"
+              role="group"
+              aria-label="Trocar tema"
+            >
+              <button
+                type="button"
+                class="btn btn-outline-light theme-toggle active"
+                data-theme-value="theme-default"
+                aria-pressed="true"
+              >
+                Noturno
+              </button>
+              <button
+                type="button"
+                class="btn btn-outline-light theme-toggle"
+                data-theme-value="theme-ocean"
+                aria-pressed="false"
+              >
+                Oceano
+              </button>
+              <button
+                type="button"
+                class="btn btn-outline-light theme-toggle"
+                data-theme-value="theme-sunset"
+                aria-pressed="false"
+              >
+                Sunset
+              </button>
             </div>
+            <a class="btn btn-outline-light btn-sm active" href="carrinho.html">
+              🛒 Carrinho
+              <span id="carrinho-count" class="badge bg-warning text-dark ms-1"
+                >0</span
+              >
+            </a>
+          </div>
         </div>
+      </div>
     </nav>
 
-    <div class="container mt-5">
-        <h2 class="text-center mb-4">Carrinho de Compras</h2>
+    <!-- Page Hero -->
+    <section class="page-hero text-white py-5">
+      <div class="container py-2">
+        <span class="section-label text-warning">Minha Compra</span>
+        <h1 class="fw-bold text-white mt-2 mb-1">🛒 Meu Carrinho</h1>
+        <p class="text-white-50 mb-0">
+          Revise seus itens antes de finalizar o pedido.
+        </p>
+      </div>
+    </section>
 
-        <!-- Itens do carrinho -->
-        <div id="carrinho-vazio" class="alert alert-warning text-center" style="display: none;">
-            Seu carrinho está vazio. <a href="produtos.html">Ver produtos</a>
+    <div class="container py-5">
+      <div id="carrinho-vazio" class="d-none">
+        <div class="text-center py-5">
+          <div style="font-size: 4rem">🛒</div>
+          <h4 class="fw-bold mt-3">Seu carrinho está vazio</h4>
+          <p class="text-muted">Adicione produtos para continuar.</p>
+          <a href="produtos.html" class="btn btn-primary px-4"
+            >Ver Produtos →</a
+          >
         </div>
+      </div>
 
-        <table class="table table-striped" id="tabela-carrinho">
+      <div id="carrinho-conteudo">
+        <div class="card border-0 shadow-sm rounded-3 mb-4 cart-table-wrapper">
+          <table class="table cart-table table-hover align-middle mb-0">
             <thead class="table-dark">
-                <tr>
-                    <th>Produto</th>
-                    <th>Preço Unit.</th>
-                    <th>Quantidade</th>
-                    <th>Subtotal</th>
-                    <th>Ação</th>
-                </tr>
+              <tr>
+                <th>Produto</th>
+                <th class="text-center">Quantidade</th>
+                <th class="text-end">Preço Unit.</th>
+                <th class="text-end">Subtotal</th>
+                <th class="text-center">Remover</th>
+              </tr>
             </thead>
-            <tbody id="corpo-carrinho">
-            </tbody>
-            <tfoot>
-                <tr class="table-info">
-                    <td colspan="3" class="text-end fw-bold fs-5">Total:</td>
-                    <td class="fw-bold fs-5" id="carrinho-total">R$ 0,00</td>
-                    <td></td>
-                </tr>
+            <tbody id="carrinho-itens"></tbody>
+            <tfoot class="table-light">
+              <tr class="fw-bold">
+                <td colspan="3" class="text-end fs-6">Total:</td>
+                <td class="text-end fs-5 text-success">
+                  R$ <span id="total-carrinho">0,00</span>
+                </td>
+                <td></td>
+              </tr>
             </tfoot>
-        </table>
-
-        <div class="d-flex justify-content-between mb-4">
-            <a href="produtos.html" class="btn btn-outline-secondary">Continuar Comprando</a>
-            <button class="btn btn-danger" id="btn-limpar-carrinho">Limpar Carrinho</button>
+          </table>
         </div>
 
-        <hr>
-
-        <!-- Formulário de Checkout -->
-        <div id="secao-checkout">
-            <h3 class="text-center mb-4">Finalizar Compra</h3>
-            <form id="form-checkout">
-                <div class="row">
-                    <div class="col-md-6">
-                        <h5>Dados Pessoais</h5>
-                        <div class="mb-3">
-                            <label for="checkout-nome" class="form-label">Nome Completo</label>
-                            <input type="text" class="form-control" id="checkout-nome" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="checkout-email" class="form-label">E-mail</label>
-                            <input type="email" class="form-control" id="checkout-email" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="checkout-telefone" class="form-label">Telefone</label>
-                            <input type="tel" class="form-control" id="checkout-telefone" required>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <h5>Endereço de Entrega</h5>
-                        <div class="mb-3">
-                            <label for="checkout-endereco" class="form-label">Endereço</label>
-                            <input type="text" class="form-control" id="checkout-endereco" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="checkout-cidade" class="form-label">Cidade</label>
-                            <input type="text" class="form-control" id="checkout-cidade" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="checkout-cep" class="form-label">CEP</label>
-                            <input type="text" class="form-control" id="checkout-cep" required>
-                        </div>
-                    </div>
-                </div>
-                <div class="text-center mt-3 mb-5">
-                    <button type="submit" class="btn btn-success btn-lg">Confirmar Pedido</button>
-                </div>
-            </form>
+        <div class="d-flex flex-wrap justify-content-between gap-2">
+          <button class="btn btn-outline-danger" onclick="limparCarrinho()">
+            🗑️ Limpar Carrinho
+          </button>
+          <a href="produtos.html" class="btn btn-outline-secondary"
+            >← Continuar Comprando</a
+          >
+          <button
+            class="btn btn-success px-4 fw-semibold"
+            onclick="finalizarPedido()"
+          >
+            ✅ Finalizar Pedido
+          </button>
         </div>
+      </div>
+    </div>
 
-        <!-- Mensagem de sucesso (escondida inicialmente) -->
-        <div id="pedido-sucesso" class="alert alert-success text-center" style="display: none;">
-            <h3>Pedido realizado com sucesso!</h3>
-            <p>Obrigado pela sua compra. Você receberá um e-mail de confirmação em breve.</p>
-            <a href="index.html" class="btn btn-primary mt-3">Voltar para Home</a>
+    <!-- Footer -->
+    <footer class="bg-dark text-white-50 py-4 mt-5">
+      <div
+        class="container d-flex flex-wrap justify-content-between align-items-center gap-3"
+      >
+        <span class="fw-bold text-white">🛍️ Labubu Store</span>
+        <span class="small"
+          >© 2026 Labubu Store. Todos os direitos reservados.</span
+        >
+        <a
+          href="mailto:contato@meusite.com"
+          class="text-white-50 small text-decoration-none"
+          >✉️ contato@meusite.com</a
+        >
+      </div>
+    </footer>
+
+    <!-- Modal de confirmação de remoção -->
+    <div
+      class="modal fade"
+      id="modalRemover"
+      tabindex="-1"
+      aria-labelledby="modalRemoverLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header bg-danger text-white">
+            <h5 class="modal-title" id="modalRemoverLabel">🗑️ Remover item</h5>
+            <button
+              type="button"
+              class="btn-close btn-close-white"
+              data-bs-dismiss="modal"
+              aria-label="Fechar"
+            ></button>
+          </div>
+          <div class="modal-body text-center">
+            <p class="fs-5">
+              Deseja remover <strong id="modalRemoverNome"></strong> do
+              carrinho?
+            </p>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Cancelar
+            </button>
+            <button
+              type="button"
+              class="btn btn-danger"
+              id="modalRemoverConfirmar"
+            >
+              Remover
+            </button>
+          </div>
         </div>
+      </div>
+    </div>
+
+    <!-- Modal de pedido finalizado -->
+    <div
+      class="modal fade"
+      id="modalFinalizado"
+      tabindex="-1"
+      aria-labelledby="modalFinalizadoLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header bg-success text-white">
+            <h5 class="modal-title" id="modalFinalizadoLabel">
+              🎉 Pedido Finalizado!
+            </h5>
+            <button
+              type="button"
+              class="btn-close btn-close-white"
+              data-bs-dismiss="modal"
+              aria-label="Fechar"
+            ></button>
+          </div>
+          <div class="modal-body text-center">
+            <p class="fs-5">Obrigado pela sua compra!</p>
+            <p class="text-muted">Seu pedido foi registrado com sucesso.</p>
+          </div>
+          <div class="modal-footer">
+            <a href="index.html" class="btn btn-success w-100"
+              >Voltar ao início</a
+            >
+          </div>
+        </div>
+      </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script type="module" src="js/main.js"></script>
-</body>
+    <script type="module" src="js/carrinho.js"></script>
+  </body>
 </html>

@@ -1,0 +1,18 @@
+@use "colors" as c;
+@use "buttons";
+
+body {
+  font-family: "Arial", sans-serif;
+  margin: 0;
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  background: c.$cor-fundo;
+}
+
+.caixa {
+  background: white;
+  border: 2px solid c.$cor-primaria;
+  border-radius: 12px;
+  padding: 20px;
+}

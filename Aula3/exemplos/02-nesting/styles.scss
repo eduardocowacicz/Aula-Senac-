@@ -1,0 +1,37 @@
+$azul: rgb(13, 66, 209);
+
+body {
+  font-family: "Arial", sans-serif;
+  padding: 24px;
+}
+
+.menu {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 20px;
+
+  a {
+    text-decoration: none;
+    color: $azul;
+    font-weight: bold;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+.botao {
+  border: 0;
+  border-radius: 8px;
+  padding: 10px 16px;
+  color: white;
+
+  &-primario {
+    background: $azul;
+  }
+
+  &:hover {
+    opacity: 0.3;
+  }
+}

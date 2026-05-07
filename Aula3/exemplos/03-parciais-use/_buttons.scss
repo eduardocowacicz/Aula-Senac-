@@ -1,0 +1,9 @@
+@use "colors" as *;
+
+.botao {
+  border: 0;
+  padding: 10px 14px;
+  border-radius: 8px;
+  color: white;
+  background: $cor-primaria;
+}

@@ -1,0 +1,48 @@
+@mixin botao-base($bg, $fg: white, $radius: 10px) {
+  border: 0;
+  border-radius: $radius;
+  padding: 10px 14px;
+  background: $bg;
+  color: $fg;
+  cursor: pointer;
+}
+
+@mixin centralizar-flex($dir: row, $gap: 10px) {
+  display: flex;
+  flex-direction: $dir;
+  gap: $gap;
+  align-items: center;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  font-family: "Arial", sans-serif;
+  background: #f7f8fb;
+}
+
+.painel {
+  background: white;
+  border-radius: 14px;
+  padding: 20px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+}
+
+.linha {
+  @include centralizar-flex(row, 12px);
+}
+
+
+.botao-sucesso {
+  @include botao-base(#0f8a5f);
+}
+
+.botao-alerta {
+  @include botao-base(orange, white, 999px);
+}
+
+.botao-perigo {
+  @include botao-base(red, white, 0);
+}

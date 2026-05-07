@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Exemplo 05 - Custom Properties</title>
+    <link rel="stylesheet" href="styles.scss" />
+  </head>
+  <body>
+    <div class="container">
+      <h1>Custom Properties (CSS Variables)</h1>
+      <p class="descricao">
+        Custom properties (variáveis CSS) são valores armazenados no escopo CSS propriedades que podem ser
+        reutilizadas em todo o CSS. Elas começam com <code>--</code> e são acessadas com <code>var()</code>.
+      </p>
+
+      <section class="secao">
+        <h2>Tema Padrão</h2>
+        <button class="botao botao-primario">Botão Primário</button>
+        <button class="botao botao-secundario">Botão Secundário</button>
+        <button class="botao botao-sucesso">Botão Sucesso</button>
+        <button class="botao botao-perigo">Botão Perigo</button>
+      </section>
+
+      <section class="secao tema-escuro">
+        <h2>Tema Escuro</h2>
+        <p>
+          As mesmas custom properties são sobrescritas neste escopo e produzem um tema escuro sem
+          alterar o HTML.
+        </p>
+        <button class="botao botao-primario">Botão Primário</button>
+        <button class="botao botao-secundario">Botão Secundário</button>
+        <button class="botao botao-sucesso">Botão Sucesso</button>
+        <button class="botao botao-perigo">Botão Perigo</button>
+      </section>
+
+      <section class="secao tema-personalizado">
+        <h2>Tema Personalizado</h2>
+        <p>
+          Demonstração de temas múltiplos usando custom properties cascateadas através do CSS.
+        </p>
+        <button class="botao botao-primario">Botão Primário</button>
+        <button class="botao botao-secundario">Botão Secundário</button>
+        <button class="botao botao-sucesso">Botão Sucesso</button>
+        <button class="botao botao-perigo">Botão Perigo</button>
+      </section>
+    </div>
+  </body>
+</html>

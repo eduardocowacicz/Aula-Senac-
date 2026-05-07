@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Exemplo 06 - Custom Properties com SCSS</title>
+    <link rel="stylesheet" href="styles.scss" />
+  </head>
+  <body>
+    <div class="container">
+      <h1>Custom Properties + SCSS</h1>
+      <p class="intro">
+        Combinando o poder das variáveis SCSS com custom properties CSS para máxima flexibilidade e reutilização.
+      </p>
+
+      <section class="painel">
+        <h2>Cards com Sistema de Temas</h2>
+        <div class="cards-container">
+          <article class="card card--destaque">
+            <h3>Destaque Premium</h3>
+            <p>Premium com acesso ilimitado a todos os recursos da plataforma.</p>
+            <span class="preco">R$ 99,90</span>
+          </article>
+
+          <article class="card card--padrao">
+            <h3>Plano Padrão</h3>
+            <p>Funcionalidades básicas para começar. Ideal para iniciantes.</p>
+            <span class="preco">R$ 29,90</span>
+          </article>
+
+          <article class="card card--gratuito">
+            <h3>Plano Gratuito</h3>
+            <p>Teste todas as funcionalidades essenciais sem compromisso.</p>
+            <span class="preco">Grátis</span>
+          </article>
+        </div>
+      </section>
+
+      <section class="painel">
+        <h2>Grid Responsivo com Custom Properties</h2>
+        <div class="grid-container">
+          <div class="item-grid">Coluna 1</div>
+          <div class="item-grid">Coluna 2</div>
+          <div class="item-grid">Coluna 3</div>
+          <div class="item-grid">Coluna 4</div>
+          <div class="item-grid">Coluna 5</div>
+          <div class="item-grid">Coluna 6</div>
+        </div>
+      </section>
+
+      <section class="painel painel--destaque">
+        <h2>Variáveis em Ação</h2>
+        <p>
+          Neste exemplo, usamos SCSS (variáveis e mixins) para gerar as valores iniciais das custom properties,
+          e depois usamos custom properties CSS para permitir mudanças em tempo de execução sem recompilar o CSS.
+        </p>
+        <div class="demonstracao">
+          <div class="box box--1">Box 1</div>
+          <div class="box box--2">Box 2</div>
+          <div class="box box--3">Box 3</div>
+        </div>
+      </section>
+    </div>
+  </body>
+</html>
